@@ -38,6 +38,7 @@ public class SquareRootTest
     [InlineData(1e-6, 5, 5)]
     [InlineData(0.0000001, 5, 5)]
     [InlineData(uint.MinValue, double.MaxValue, double.MaxValue)]
+    [InlineData(null, null, null)]
     [Theory]
     public void Solve_Exception(double a, double b, double c)
     {
