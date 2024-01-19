@@ -39,10 +39,12 @@ public class SquareRootTest
     [InlineData(0.0000001, 5, 5)]
     [InlineData(uint.MinValue, double.MaxValue, double.MaxValue)]
     [InlineData(null, null, null)]
+    [InlineData(double.NaN, double.NaN, double.NaN)]
+    [InlineData(double.PositiveInfinity, double.NegativeInfinity, double.PositiveInfinity)]
     [Theory]
-    public void Solve_Exception(double a, double b, double c)
+    public void Solve_ValidationException(double a, double b, double c)
     {
-        Assert.Throws<ArgumentException>(() => SquareRoot.Solve(a, b, c));
+        Assert.Throws(typeof(System.ComponentModel.DataAnnotations.ValidationException) ,() => SquareRoot.Solve(a, b, c));
 
     }
 }

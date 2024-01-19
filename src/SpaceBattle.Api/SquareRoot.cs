@@ -1,15 +1,37 @@
-﻿namespace SpaceBattle.Api;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace SpaceBattle.Api;
 public static class SquareRoot
 {
-
-    private const double e = 1e-5;
-
-    public static double[] Solve(double a, double b, double c)
+    public record SolveValidate(double A, double B, double C) :IValidatableObject
     {
-        if (Math.Abs(a) < e)
+        private const double e = 1e-5;
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new ArgumentException($"{a} не равно 0", nameof(a));
+            if (Math.Abs(A) < e)
+            {
+                yield return new ValidationResult($"{A} не равно 0");
+            }
+            foreach (var item in new []{ A, B, C })
+            {
+                if (double.IsNaN(item))
+                {
+                    yield return new ValidationResult($"{item} IsNaN");
+                }
+                if (double.IsInfinity(item))
+                {
+                    yield return new ValidationResult($"{item} IsInfinity");
+                }
+            }
+
         }
+    }
+
+    public static double[] Solve(double a,double b, double c)
+    {
+        var validateModel = new SolveValidate(a, b, c);
+        Validator.ValidateObject(validateModel, new ValidationContext(validateModel));
+
         var discriminant = Math.Pow(b, 2) - 4 * a * c;
         if (discriminant < 0)
         {
