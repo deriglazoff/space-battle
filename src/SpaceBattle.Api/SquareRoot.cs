@@ -3,12 +3,12 @@
 namespace SpaceBattle.Api;
 public static class SquareRoot
 {
+    private const double epsilon = 1e-5;
     public record SolveValidate(double A, double B, double C) :IValidatableObject
     {
-        private const double e = 1e-5;
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            if (Math.Abs(A) < e)
+            if (Math.Abs(A) < epsilon)
             {
                 yield return new ValidationResult($"{A} не равно 0");
             }
@@ -33,15 +33,15 @@ public static class SquareRoot
         Validator.ValidateObject(validateModel, new ValidationContext(validateModel));
 
         var discriminant = Math.Pow(b, 2) - 4 * a * c;
-        if (discriminant < 0)
-        {
-            return [];
-        }
 
         if (discriminant == 0)
         {
             var x1 = -b / (2 * a);
             return [x1];
+        }
+        if (discriminant < epsilon)
+        {
+            return [];
         }
         else
         {
