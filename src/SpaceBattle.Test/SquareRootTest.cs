@@ -6,7 +6,7 @@ namespace SpaceBattle.Test;
 public class SquareRootTest
 {
     [InlineData(1, 0, 1)]
-    [Theory]
+    [Theory()]
     public void Solve_Empty(double a, double b, double c)
     {
         var act = SquareRoot.Solve(a, b, c);

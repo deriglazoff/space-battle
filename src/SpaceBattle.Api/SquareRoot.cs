@@ -34,7 +34,7 @@ public static class SquareRoot
 
         var discriminant = Math.Pow(b, 2) - 4 * a * c;
 
-        if (discriminant == 0)
+        if (Math.Abs(a) >= epsilon && Math.Abs(b) >= epsilon && Math.Abs(c) >= epsilon)
         {
             var x1 = -b / (2 * a);
             return [x1];
