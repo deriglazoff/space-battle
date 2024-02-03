@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace SpaceBattle.Api;
+
 public static class SquareRoot
 {
     private const double epsilon = 1e-5;
-    public record SolveValidate(double A, double B, double C) :IValidatableObject
+    private record SolveValidate(double A, double B, double C) : IValidatableObject
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -12,7 +13,7 @@ public static class SquareRoot
             {
                 yield return new ValidationResult($"{A} не равно 0");
             }
-            foreach (var item in new []{ A, B, C })
+            foreach (var item in new[] { A, B, C })
             {
                 if (double.IsNaN(item))
                 {
@@ -23,7 +24,6 @@ public static class SquareRoot
                     yield return new ValidationResult($"{item} IsInfinity");
                 }
             }
-
         }
     }
 
