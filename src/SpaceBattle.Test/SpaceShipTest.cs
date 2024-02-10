@@ -11,19 +11,21 @@ public class SpaceShipTest
         "движение меняет положение объекта на (5, 8)")]
     public void Move_Equal()
     {
-        var spaceShip = new Movable(12, 5);
+        var ship = new SpaceShip { x = 12, y = 5 };
+        var command = new MoveCommand(ship, -7, 3);
 
-        spaceShip.Move(-7, 3);
+        command.Execute();
 
-        Assert.Equal(5, spaceShip.x);
-        Assert.Equal(8, spaceShip.y);
+        Assert.Equal(5, ship.x);
+        Assert.Equal(8, ship.y);
     }
 
     [Fact(DisplayName = "Ошибка для отрицательного градуса")]
     public void Test()
     {
-        var spaceShip = new Rotable();
+        var ship = new SpaceShip { Direction = 0 };
+        var command = new RotateCommand(ship, -20);
 
-        Assert.Throws<ValidationException>(() => spaceShip.Rotate(-20));
+        Assert.Throws<ValidationException>(() => command.Execute());
     }
 }
