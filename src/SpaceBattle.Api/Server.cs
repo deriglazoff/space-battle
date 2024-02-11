@@ -8,17 +8,15 @@ public class Server(BlockingCollection<ICommand> commands, ExceptionHandler hand
 
     public ExceptionHandler _handler = handler;
 
-    private bool stop = false;
-
     public Task StartAsync(CancellationToken cancellationToken)
     {
-        while (!stop)
+        while (!cancellationToken.IsCancellationRequested)
         {
-            if (Commands.Any() is false)
+            if (commands.Any() is false)
             {
                 break;
             }
-            var command = Commands.Take();
+            var command = Commands.Take(cancellationToken);
             try
             {
                 command.Execute();
@@ -35,7 +33,6 @@ public class Server(BlockingCollection<ICommand> commands, ExceptionHandler hand
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        stop = true;
-        return Task.CompletedTask;
+        throw new NotImplementedException();
     }
 }

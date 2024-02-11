@@ -1,9 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using NSubstitute;
-using NSubstitute.Core.Arguments;
+﻿using NSubstitute;
 using SpaceBattle.Api;
 using SpaceBattle.Api.Commands;
-using System.Collections.Concurrent;
 using System.ComponentModel.DataAnnotations;
 using Xunit;
 
@@ -29,7 +26,7 @@ public class ExceptionTest
 
 
         await server.StartAsync(token.Token);
-
+        token.Cancel();
 
         logger.Received().LogError(Arg.Any<ValidationException>());
     }
@@ -37,10 +34,10 @@ public class ExceptionTest
     [Fact(DisplayName = "Реализовать обработчик исключения, который ставит в очередь Команду - повторитель команды, выбросившей исключение.")]
     public async Task RetryCommand()
     {
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
 
         var commandException = Substitute.For<ICommand>();
         commandException.When(fake => fake.Execute()).Do(call => { throw new Exception(); });
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
         exceptionHandler.RegisterHandler(commandException.GetType(), typeof(Exception),
             (c, e) => new RetryCommand(commandException));
 
@@ -59,17 +56,17 @@ public class ExceptionTest
         "при первом выбросе исключения повторить команду, при повторном выбросе исключения записать информацию в лог.")]
     public async Task DoubleRetryCommand()
     {
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
 
         var logger = Substitute.For<Ilogger>();
         var commandException = Substitute.For<ICommand>();
         commandException.When(fake => fake.Execute()).Do(call => { throw new Exception(); });
-        exceptionHandler.RegisterHandler(commandException.GetType(), typeof(Exception),
+        ExceptionHandler exceptionHandler2 = new ExceptionHandler();
+        exceptionHandler2.RegisterHandler(commandException.GetType(), typeof(Exception),
             (c, e) => new RetryCommand(commandException));
-        exceptionHandler.RegisterHandler(typeof(RetryCommand), typeof(Exception),
+        exceptionHandler2.RegisterHandler(typeof(RetryCommand), typeof(Exception),
             (c, e) => new LogExceptionCommand(logger, e));
 
-        var server = new Server([commandException], exceptionHandler);
+        var server = new Server([commandException], exceptionHandler2);
         var token = new CancellationTokenSource();
 
 

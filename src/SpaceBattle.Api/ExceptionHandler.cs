@@ -8,7 +8,7 @@ public class DefaultHandler : ICommand
 }
 public class ExceptionHandler
 {
-    private static readonly Dictionary<
+    private readonly Dictionary<
         Type, // Command
         Dictionary<
             Type, // Exception
@@ -34,7 +34,6 @@ public class ExceptionHandler
 
     public void RegisterHandler(Type c, Type e, Func<ICommand, Exception, ICommand> f)
     {
-
         var cmd = new Dictionary<Type, Func<ICommand, Exception, ICommand>>
         {
             { e, f }
