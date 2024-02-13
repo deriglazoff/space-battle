@@ -1,5 +1,6 @@
 ﻿using SpaceBattle.Api;
 using System.ComponentModel.DataAnnotations;
+using System.Numerics;
 using Xunit;
 
 namespace SpaceBattle.Test;
@@ -11,21 +12,20 @@ public class SpaceShipTest
         "движение меняет положение объекта на (5, 8)")]
     public void Move_Equal()
     {
-        var ship = new SpaceShip { x = 12, y = 5 };
-        var command = new MoveCommand(ship, -7, 3);
+        var ship = new SpaceShip { Position = new Vector2(12, 5), Velocity = new Vector2(-7, 3) };
+        var command = new MoveCommand(ship);
 
         command.Execute();
 
-        Assert.Equal(5, ship.x);
-        Assert.Equal(8, ship.y);
+        Assert.Equal(new Vector2(5, 8), ship.Position);
     }
 
     [Fact(DisplayName = "Ошибка для отрицательного градуса")]
     public void Test()
     {
-        var ship = new SpaceShip { Direction = 0 };
-        var command = new RotateCommand(ship, -20);
+        var ship = new SpaceShip { Direction = -20 };
+        var command = new RotateCommand(ship);
 
-        Assert.Throws<ValidationException>(() => command.Execute());
+        Assert.Throws<ValidationException>(command.Execute);
     }
 }

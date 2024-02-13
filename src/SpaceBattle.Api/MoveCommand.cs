@@ -1,9 +1,8 @@
 ﻿namespace SpaceBattle.Api;
-public class MoveCommand(SpaceShip ship, float dx = 0, float dy = 0) : ICommand
+public class MoveCommand(IMovable ship) : ICommand
 {
     public void Execute()
     {
-        ship.x += dx;
-        ship.y += dy;
+        ship.Position +=ship.Velocity;
     }
 }

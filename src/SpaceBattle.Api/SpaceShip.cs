@@ -1,9 +1,25 @@
-﻿namespace SpaceBattle.Api;
+﻿using System.Numerics;
 
-public class SpaceShip
+namespace SpaceBattle.Api;
+
+public interface IMovable
 {
-    public float x;
-    public float y;
+    public Vector2 Position { get; set; }
 
-    public int Direction = 0;
+    public Vector2 Velocity { get; set; }
+}
+public interface IRotation
+{
+    public int Direction { get; set; }
+    public int AngularVelocity { get; }
+}
+public class SpaceShip : IMovable, IRotation
+{
+    public int Direction { get; set; }
+
+    public Vector2 Position { get; set; }
+
+    public Vector2 Velocity { get; set; }
+
+    public int AngularVelocity { get; }
 }
