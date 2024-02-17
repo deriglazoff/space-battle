@@ -1,4 +1,5 @@
 ﻿using SpaceBattle.Api;
+using SpaceBattle.Api.Commands;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 using Xunit;

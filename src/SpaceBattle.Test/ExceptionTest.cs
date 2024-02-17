@@ -18,8 +18,8 @@ public class ExceptionTest
         exceptionHandler.RegisterHandler(typeof(RotateCommand), typeof(ValidationException),
             (c, e) => new LogExceptionCommand(logger, e));
 
-        var ship = new SpaceShip { Direction = 0 };
-        var command = new RotateCommand(ship, -20);
+        var ship = new SpaceShip { Direction = -20 };
+        var command = new RotateCommand(ship);
 
         var server = new Server([command], exceptionHandler);
         var token = new CancellationTokenSource();

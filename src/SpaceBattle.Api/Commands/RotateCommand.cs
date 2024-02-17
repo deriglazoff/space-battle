@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SpaceBattle.Api;
+namespace SpaceBattle.Api.Commands;
 
 public class RotateCommand(IRotation ship) : ICommand
 {
