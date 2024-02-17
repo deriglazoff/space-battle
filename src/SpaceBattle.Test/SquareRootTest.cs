@@ -1,4 +1,5 @@
 using SpaceBattle.Api;
+using System.ComponentModel.DataAnnotations;
 using Xunit;
 
 namespace SpaceBattle.Test;
@@ -6,7 +7,7 @@ namespace SpaceBattle.Test;
 public class SquareRootTest
 {
     [InlineData(1, 0, 1)]
-    [Theory()]
+    [Theory]
     public void Solve_Empty(double a, double b, double c)
     {
         var act = SquareRoot.Solve(a, b, c);
@@ -44,7 +45,6 @@ public class SquareRootTest
     [Theory]
     public void Solve_ValidationException(double a, double b, double c)
     {
-        Assert.Throws(typeof(System.ComponentModel.DataAnnotations.ValidationException) ,() => SquareRoot.Solve(a, b, c));
-
+        Assert.Throws<ValidationException>(() => SquareRoot.Solve(a, b, c));
     }
 }
