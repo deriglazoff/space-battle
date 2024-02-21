@@ -13,7 +13,14 @@ public interface IRotation
     public int Direction { get; set; }
     public int AngularVelocity { get; }
 }
-public class SpaceShip : IMovable, IRotation
+
+public interface IFuel
+{
+    public int Fuel { get; set; }
+
+    public int NeedFuel { get; set; }
+}
+public class SpaceShip : IMovable, IRotation, IFuel
 {
     public int Direction { get; set; }
 
@@ -22,4 +29,8 @@ public class SpaceShip : IMovable, IRotation
     public Vector2 Velocity { get; set; }
 
     public int AngularVelocity { get; }
+
+    public int Fuel { get; set; }
+
+    public int NeedFuel { get; set; }
 }
