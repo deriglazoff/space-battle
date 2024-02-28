@@ -7,6 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBattle.Api", "SpaceBat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceBattle.Test", "SpaceBattle.Test\SpaceBattle.Test.csproj", "{149112E1-B49B-412C-886B-489E4EBBB5BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FAAAAAB1-B683-48A7-82DF-B91953A1DA1E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
