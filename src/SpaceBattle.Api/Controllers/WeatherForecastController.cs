@@ -1,22 +1,23 @@
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 
-namespace SpaceBatle.Api.Controllers;
+namespace SpaceBattle.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class RabbitMqController : ControllerBase
 {
 
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
+    private readonly IBus _bus;
+    public RabbitMqController(IBus bus)
     {
-        _logger = logger;
+        _bus = bus;
     }
 
-    [HttpGet()]
-    public IActionResult Get()
+    [HttpPost()]
+    public IActionResult Post(MyMessage message)
     {
+        _bus.Publish(message);
         return Ok();
     }
 }
