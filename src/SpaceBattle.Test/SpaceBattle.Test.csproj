@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpaceBattle.Api\SpaceBattle.Api.csproj" />
+    <ProjectReference Include="..\SpaceBattle.Auth\SpaceBattle.Auth.csproj" />
   </ItemGroup>
 
 </Project>
